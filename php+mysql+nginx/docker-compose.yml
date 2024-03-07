@@ -1,0 +1,27 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:1.8
+    ports:
+      - 98:80
+    depends_on:
+      - "php"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d
+    container_name: "nginx"
+
+  mysql:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    container_name: "mysql"
+
+  php:
+    image: php:5.6-fpm
+    ports:
+      - 9000:9000
+    volumes:
+      - ./backend:/var/www/html
+    container_name: "php"
